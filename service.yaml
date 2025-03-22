@@ -6,7 +6,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: app # Этот селектор должен соответствовать меткам вашего Deployment
+    app: app
   ports:
-  - port: 8000       # Порт сервиса (на этот порт будут приходить запросы)
-    targetPort: 8000 # Порт контейнера внутри пода (порт приложения)
+  - port: 8000
+    targetPort: 8000
