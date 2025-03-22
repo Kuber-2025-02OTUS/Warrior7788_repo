@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+  namespace: homework
+spec:
+  type: ClusterIP
+  selector:
+    app: app # Этот селектор должен соответствовать меткам вашего Deployment
+  ports:
+  - port: 8000       # Порт сервиса (на этот порт будут приходить запросы)
+    targetPort: 8000 # Порт контейнера внутри пода (порт приложения)
