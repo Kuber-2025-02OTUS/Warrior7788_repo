@@ -19,3 +19,10 @@ spec:
             name: my-service
             port:
               number: 8000
+      - pathType: Prefix
+        path: "/homepage"
+        backend:
+          service:
+            name: my-service
+            port:
+              number: 8000
