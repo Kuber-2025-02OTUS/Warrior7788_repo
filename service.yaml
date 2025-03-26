@@ -6,7 +6,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: app 
+    app: nginx 
   ports:
-  - port: 8000 
-    targetPort: 8000 
+  - port: 8000
+    targetPort: 8000

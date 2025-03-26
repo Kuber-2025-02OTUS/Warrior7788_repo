@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-homework
+  name: nginx-deployment
   namespace: homework
 spec:
   replicas: 3
@@ -10,44 +10,56 @@ spec:
     rollingUpdate:
       maxUnavailable: 1
       maxSurge: 0
-  template:
+ 
   selector:
     matchLabels:
-      app: app
+      app: nginx
   template:
     metadata:
       labels:
-        app: app
+        app: nginx
+
     spec:
       volumes:
-        - name: shared-volume
-          emptyDir: {}
-
+      - name: nginx-config-volume
+        configMap:
+          name: nginx-config
+          items:
+          - key: default.conf
+            path: default.conf
+      - name: shared-volume
+        emptyDir: {}
+      - name: my-configmap
+        configMap:
+          name: my-configmap
+      
       initContainers:
-        - name: init-container
-          image: busybox:stable
-          command: ['sh', '-c', 'ls /init/ > /init/index.html']
-          volumeMounts:
-            - name: shared-volume
-              mountPath: /init
+      - name: init-container
+        image: busybox:stable
+        command: ['sh', '-c', echo 'Hello!'   > /init/index.html]
+        volumeMounts:
+        - name: shared-volume
+          mountPath: /init
       nodeSelector:
         kubernetes.io/hostname: worker3
       containers:
-        - name: main-container
-          image: python:3.9-slim
-          command: ["python3", "-m", "http.server", "8000", "--directory", "/"]
-          ports:
-            - containerPort: 8000
-          volumeMounts:
-            - name: shared-volume
-              mountPath: /homework
-          readinessProbe:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: nginx-config-volume
+          mountPath: /etc/nginx/conf.d/
+          readOnly: true
+        - name: shared-volume
+          mountPath: /homework
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - 'test -f /homework/index.html'
+        lifecycle:
+          preStop:
             exec:
-              command:
-              - sh
-              - -c
-              - 'test -f /homework/index.html'
-          lifecycle:
-            preStop:
-              exec:
-                command: ["sh", "-c", "rm -f /homework/index.html"]
+              command: ["sh", "-c", "rm -f /homework/index.html"]
