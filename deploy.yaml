@@ -27,8 +27,9 @@ spec:
           items:
           - key: default.conf
             path: default.conf
-      - name: shared-volume
-        emptyDir: {}
+      - name: my-pvc
+        persistentVolumeClaim:
+          claimName: my-pvc
       - name: my-configmap
         configMap:
           name: my-configmap
@@ -38,7 +39,7 @@ spec:
         image: busybox:stable
         command: ['sh', '-c', echo 'Hello!'   > /init/index.html]
         volumeMounts:
-        - name: shared-volume
+        - name: my-pvc
           mountPath: /init
       nodeSelector:
         kubernetes.io/hostname: worker3
@@ -51,8 +52,10 @@ spec:
         - name: nginx-config-volume
           mountPath: /etc/nginx/conf.d/
           readOnly: true
-        - name: shared-volume
+        - name: my-pvc
           mountPath: /homework
+        - name: my-configmap
+          mountPath: /homework/conf/file
         readinessProbe:
           exec:
             command:

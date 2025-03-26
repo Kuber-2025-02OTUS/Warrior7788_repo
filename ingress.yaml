@@ -6,20 +6,14 @@ metadata:
 
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
   - host: homework.otus
     http:
       paths:
-      - path: /homepage(/|$)(.*)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: my-service
-            port:
-              number: 8000
-      - path: /index.html
+      - path: /homepage(/.*|$)|/(.*)
         pathType: ImplementationSpecific
         backend:
           service:
