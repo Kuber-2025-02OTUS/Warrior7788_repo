@@ -1,0 +1,56 @@
+# values.yaml
+deployment:
+  name: deployment-helm
+  spec:
+    replicas: 3
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 1
+        maxSurge: 0
+
+    selector:
+      matchLabels:
+        app: nginx
+  nodeSelector:
+    hostname: worker3
+#image
+image:
+  repository: nginx
+  tag: latest
+  pullPolicy: IfNotPresent
+###
+#optional
+probes:
+  readinessProbe:
+    enabled: true
+
+lifecycle:
+  preStop:
+    enabled: true
+###
+serviceAccount:
+  create: true
+#serivce
+service:
+  type: LoadBalancer
+  port: 8001
+ingress:
+  enabled: false
+###
+autoscaling:
+  enabled: false
+#volumes
+persistentVolume:
+  name: my-pv-helm
+
+persistentVolumeClaim:
+  name: my-pvc-helm
+
+nginx:
+  cm_name: my-configmap-helm
+  cm_conf: nginx-config-helm
+
+configMapKey: default.conf
+configMapPath: default.conf
+###
