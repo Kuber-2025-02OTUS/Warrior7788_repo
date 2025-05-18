@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv1
+  namespace: homework
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 11Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+#  persistentVolumeReclaimPolicy: Delete
+  storageClassName: my-storageclass
+  nfs:
+    server: 192.168.1.118
+    path: /mnt/nfsdir
