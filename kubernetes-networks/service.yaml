@@ -4,9 +4,12 @@ metadata:
   name: my-service
   namespace: homework
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: nginx 
   ports:
   - port: 8000
     targetPort: 8000
+  selector:
+    app.kubernetes.io/name: my-ingress
+    app.kubernetes.io/component: controller
