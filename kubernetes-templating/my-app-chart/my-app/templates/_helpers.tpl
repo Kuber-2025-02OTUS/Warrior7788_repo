@@ -2,7 +2,7 @@
 Helper function to return the namespace
 */}}
 {{- define "namespace" -}}
-homework
+homework-new
 {{- end -}}
 
 {{/*
