@@ -10,6 +10,6 @@ spec:
   ports:
   - port: 8000
     targetPort: 8000
-  selector:
-    app.kubernetes.io/name: my-ingress
-    app.kubernetes.io/component: controller
+#  selector:
+#    app.kubernetes.io/name: my-ingress
+#    app.kubernetes.io/component: controller
