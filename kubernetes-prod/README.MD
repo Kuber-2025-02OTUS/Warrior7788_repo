@@ -1,4 +1,4 @@
-# Install k8s cluster via kubeadm
+# Install Kubernetes Cluster using kubeadm
 
 sudo apt install -y apt-transport-https ca-certificates curl gpg
 VER=1.31
@@ -86,6 +86,7 @@ sudo kubeadm init \
  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
  sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
+# Upgrade Kubernetes Cluster Upgrade from v1.31 to v1.32 using kubeadm
 ## Join 1 control-plane node
 kubeadm join k8s-cluster.otus.loc:6443 --token sr4414.1kvat0palh5o4ik \
     --discovery-token-ca-cert-hash sha256:1d2c7d5a14c5d717a676291ff5ac25e041386e6371d56bb5cc82d5907fdf62a1 \
