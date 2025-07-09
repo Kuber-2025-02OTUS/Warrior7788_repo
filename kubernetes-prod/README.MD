@@ -1,7 +1,8 @@
 # install k8s cluster via kubeadm
+
 sudo apt install -y apt-transport-https ca-certificates curl gpg
 VER=1.31
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v${VER}/deb/Release.key | sudoecho "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${VER}/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v${VER}/deb/Release.key | sudo echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${VER}/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 sudo apt update
 sudo apt install wget curl vim git kubelet kubeadm kubectl -y
 sudo apt-mark hold kubelet kubeadm kubectl
@@ -131,7 +132,7 @@ sudo systemctl restart kubelet
 kubectl uncordon worker3
 
 ## kubectl get nodes
-cp1       Ready    control-plane   1h   v1.32.1
-worker1   Ready    <none>          1h   v1.32.1
-worker2   Ready    <none>          1h   v1.32.1
-worker3   Ready    <none>          1h   v1.32.1
+- cp1       Ready    control-plane   1h   v1.32.1
+- worker1   Ready    <none>          1h   v1.32.1
+- worker2   Ready    <none>          1h   v1.32.1
+- worker3   Ready    <none>          1h   v1.32.1
