@@ -82,9 +82,10 @@ sudo kubeadm init \
   --upload-certs \
   --control-plane-endpoint=k8s-cluster.otus.loc
 
- mkdir -p $HOME/.kube
- sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
- sudo chown $(id -u):$(id -g) $HOME/.kube/config
+## Copy kubeconf
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 # Upgrade Kubernetes Cluster Upgrade from v1.31 to v1.32 using kubeadm
 ## Join 1 control-plane node
