@@ -1,4 +1,4 @@
-# install k8s cluster via kubeadm
+# Install k8s cluster via kubeadm
 
 sudo apt install -y apt-transport-https ca-certificates curl gpg
 VER=1.31
@@ -8,7 +8,7 @@ sudo apt install wget curl vim git kubelet kubeadm kubectl -y
 sudo apt-mark hold kubelet kubeadm kubectl
 apt-mark unhold
 
-## turn off swap
+## Turn off swap
 sudo swapoff -a 
 sudo sed -i '/ swap / s/^/#/' /etc/fstab
 
@@ -86,17 +86,17 @@ sudo kubeadm init \
  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
  sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-## join 1 control-plane node
+## Join 1 control-plane node
 kubeadm join k8s-cluster.otus.loc:6443 --token sr4414.1kvat0palh5o4ik \
     --discovery-token-ca-cert-hash sha256:1d2c7d5a14c5d717a676291ff5ac25e041386e6371d56bb5cc82d5907fdf62a1 \
     --control-plane 
-## join 3 worker nodes
+## Join 3 worker nodes
 kubeadm join k8s-cluster.computingforgeeks.com:6443 --token sr4l2l.2kvot0pfalh5o4ik \
     --discovery-token-ca-cert-hash sha256:c692fb047e15883b575bd6710779dc2c5af8073f7cab460abd181fd3ddb29a18
 
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
-## update control-plane
+## Update control-plane
 sudo apt-get update && sudo apt-get install -y --allow-change-held-packages kubeadm=1.32
 sudo kubeadm upgrade plan
 sudo kubeadm upgrade apply v1.32.0
@@ -104,7 +104,7 @@ sudo apt-get update && sudo apt-get install -y --allow-change-held-packages kube
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
 
-## update worker1
+## Update worker1
 kubectl drain worker1 --ignore-daemonsets --delete-emptydir-data
 sudo apt-get update && sudo apt-get install -y --allow-change-held-packages kubeadm=1.32
 sudo kubeadm upgrade node
@@ -113,7 +113,7 @@ sudo systemctl daemon-reload
 sudo systemctl restart kubelet
 kubectl uncordon worker1 
 
-## update worker2
+## Update worker2
 kubectl drain worker2 --ignore-daemonsets --delete-emptydir-data
 sudo apt-get update && sudo apt-get install -y --allow-change-held-packages kubeadm=1.32
 sudo kubeadm upgrade node
@@ -122,7 +122,7 @@ sudo systemctl daemon-reload
 sudo systemctl restart kubelet
 kubectl uncordon worker2
 
-## update worker3
+## Update worker3
 kubectl drain worker3 --ignore-daemonsets --delete-emptydir-data
 sudo apt-get update && sudo apt-get install -y --allow-change-held-packages kubeadm=1.32
 sudo kubeadm upgrade node
